@@ -3,7 +3,7 @@ var dayText = $(".description");
 
 //1. Display current time using Moment.js
 $("#currentDay").text(moment().format('ddd MMM Do, YYYY'));
-var currentTime= moment().format("YYYY-MM-DD HH:mm");
+var currentTime = moment().format("YYYY-MM-DD HH:mm");
 
 //2. Click event to save text area content to local storage
 $(".saveBtn").click(function (event) {
@@ -12,7 +12,7 @@ $(".saveBtn").click(function (event) {
   var preValue = $(this).prev("textarea").val();
   var time = $(this).attr("data-time");
   localStorage.setItem(time, preValue);
-  
+
 });
 
 //3. When app opens, display content for each time block from local storage.
@@ -29,14 +29,26 @@ $("#fivepm").val(localStorage.getItem("5"));
 
 
 //4. Change time block background-color depending on the current hour (past, present, and future).
+function timeSlot() {
+  const timeRightNow = moment().hours();
+  $(".row").each(function () {
+    const appRow = parseInt($(this).attr("id").split("-")[1]);
 
-if (condition) {
-  
-} else {
-  
+    if (appRow < timeRightNow) {
+      $(this).addClass("future");
+    }
+    else if (appRow === timeRightNow) {
+      $(this).removeClass("future");
+      $(this).addClass("present");
+    }
+    else {
+      $(this).removeClass("future");
+      $(this).removeClass("present");
+      $(this).addClass("past");
+
+
+    }
+
+  });
 }
-if (condition) {
-  
-} else {
-  
-}
+timeSlot()
